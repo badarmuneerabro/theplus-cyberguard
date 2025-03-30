@@ -8,7 +8,7 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
     const router = useRouter();
 
     useEffect(() => {
-      const token = Cookies.get('token');
+      const token = Cookies.get('authToken');
       
       if (!token) {
         // Redirect to login if no token
@@ -17,7 +17,7 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
     }, []);
 
     // Check for token before rendering
-    const token = Cookies.get('token');
+    const token = Cookies.get('authToken');
     
     if (!token) {
       return null; // or a loading spinner

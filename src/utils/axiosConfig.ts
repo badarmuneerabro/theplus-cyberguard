@@ -9,7 +9,7 @@ export const setupAxiosInterceptors = () => {
   // Request interceptor to add token to requests
   axios.interceptors.request.use(
     config => {
-      const token = Cookies.get('token');
+      const token = Cookies.get('authToken');
       if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
       }
@@ -27,7 +27,7 @@ export const setupAxiosInterceptors = () => {
       // Handle 401 (Unauthorized) errors
       if (error.response?.status === 401) {
         // Remove tokens
-        Cookies.remove('token');
+        Cookies.remove('authToken');
         Cookies.remove('refreshToken');
         
         // Redirect to login
@@ -50,7 +50,7 @@ export const setupAxiosInterceptors = () => {
           );
 
           // Update tokens
-          Cookies.set('token', response.data.token);
+          Cookies.set('authToken', response.data.token);
           Cookies.set('refreshToken', response.data.refreshToken);
 
           // Retry the original request
@@ -58,7 +58,7 @@ export const setupAxiosInterceptors = () => {
           return axios(originalRequest);
         } catch (refreshError) {
           // Refresh failed, logout user
-          Cookies.remove('token');
+          Cookies.remove('authToken');
           Cookies.remove('refreshToken');
           window.location.href = '/auth/login';
           return Promise.reject(refreshError);

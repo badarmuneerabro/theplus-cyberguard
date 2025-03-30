@@ -68,7 +68,7 @@ export const login = async (email: string, password: string) => {
     
     // Store tokens
     if (data.data?.accessToken) {
-      Cookies.set('token', data.data.accessToken);
+      Cookies.set('authToken', data.data.accessToken);
       Cookies.set('refreshToken', data.data.refreshToken);
       localStorage.setItem('authToken', data.data.accessToken);
       localStorage.setItem('refreshToken', data.data.refreshToken);

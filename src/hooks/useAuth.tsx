@@ -51,14 +51,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // Check if user is authenticated on initial load
   useEffect(() => {
     const checkUserAuth = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('authToken');
       if (token) {
         try {
           const response = await authService.getCurrentUser();
           setUser(response.data);
         } catch (err) {
           console.error('Failed to get current user:', err);
-          localStorage.removeItem('token');
+          localStorage.removeItem('authToken');
         }
       }
       setLoading(false);
@@ -73,7 +73,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setError(null);
       const response = await authService.login(credentials.email, credentials.password);
       const { token } = response.data;
-      localStorage.setItem('token', token);
+      localStorage.setItem('authToken', token);
       
       // Get the user data after successful login
       const userResponse = await authService.getCurrentUser();
@@ -110,12 +110,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Handle logout
   const logout = async (): Promise<void> => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     if (token) {
       await authService.logout(token);
     }
     setUser(null);
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken');
     router.push('/auth/login');
   };
 

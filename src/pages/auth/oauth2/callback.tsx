@@ -13,7 +13,7 @@ export default function OAuth2Callback() {
     const refreshToken = decodeURIComponent(router.query.refreshToken as string || '');
 
     if (token) {
-      localStorage.setItem('token', token);
+      localStorage.setItem('authToken', token);
 
       // Store refresh token if available
       if (refreshToken) {
