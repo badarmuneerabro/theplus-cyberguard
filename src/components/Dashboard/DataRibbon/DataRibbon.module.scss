@@ -1,0 +1,15 @@
+.dataRibbon {
+  display: grid;
+  text-align: center;
+  grid-template-columns: 1fr; // Default to a single column
+
+  @media screen and (min-width: 600px) {
+    grid-template-columns: 1fr 1fr; // Two columns on medium screens
+  }
+
+  @media screen and (min-width: 900px) {
+    grid-template-columns: 1fr 1fr 1fr; // Three columns on larger screens
+  }
+
+  //gap: 16px; // Ensure there is some spacing between grid items
+}
